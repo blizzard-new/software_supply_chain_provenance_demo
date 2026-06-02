@@ -59,25 +59,40 @@ def verify_github(artifact: Path, repo: str | None) -> int:
         stderr=subprocess.STDOUT,
         text=True,
     )
-    print(result.stdout.rstrip())
+    output = result.stdout.rstrip()
     if result.returncode != 0:
+        print(output)
         print("[github] verification FAILED")
         return result.returncode
 
     try:
-        records = json.loads(result.stdout)
+        records = json.loads(output)
     except json.JSONDecodeError:
+        if output:
+            print(output)
         print("[github] verification PASSED")
         return 0
 
     if records:
-        statement = records[0].get("verificationResult", {}).get("statement", {})
+        verification = records[0].get("verificationResult", {})
+        statement = verification.get("statement", {})
         predicate = statement.get("predicate", {})
         subject = statement.get("subject", [{}])[0]
+        certificate = verification.get("signature", {}).get("certificate", {})
+        timestamps = verification.get("verifiedTimestamps", [])
+        builder = (
+            predicate.get("runDetails", {}).get("builder", {}).get("id")
+            or predicate.get("builder", {}).get("id")
+            or "unknown"
+        )
         print("[github] verification PASSED")
         print(f"[github] subject  = {subject.get('name', 'unknown')}")
         print(f"[github] digest   = {subject.get('digest', {}).get('sha256', 'unknown')}")
-        print(f"[github] builder  = {predicate.get('builder', {}).get('id', 'unknown')}")
+        print(f"[github] builder  = {builder}")
+        print(f"[github] workflow = {certificate.get('githubWorkflowName', 'unknown')}")
+        print(f"[github] commit   = {certificate.get('sourceRepositoryDigest', 'unknown')}")
+        if timestamps:
+            print(f"[github] tlog     = {timestamps[0].get('uri', 'unknown')}")
     else:
         print("[github] verification PASSED")
     return 0
