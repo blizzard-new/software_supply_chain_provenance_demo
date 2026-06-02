@@ -24,23 +24,32 @@ python scripts/tamper_demo.py --mode local
 
 ## B. 正式 GitHub attestation 版
 
-事前準備：
-- repo 必須是公開 repo，除非你們有 GitHub Enterprise Cloud。
+目前狀態：已完成。
+
+- Public repo: https://github.com/blizzard-new/software_supply_chain_provenance_demo
+- Verified run: https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26840712563
+- Commit: `f62d84ffb4a96ee5f85527f53d2f0e7badccb6dc`
+- `Generate artifact attestation`: success
+- `Verify artifact attestation`: success
+- `Verify tamper is rejected`: success
+
+如果只做簡報，可以直接打開上面的 Actions run 截圖，不一定要在每位組員電腦重跑。
+
+自己電腦重跑的事前準備：
 - 本機要安裝 GitHub CLI：`gh`
 - 要執行 `gh auth login`
-- GitHub Actions workflow 要成功跑完。
 
 流程：
 
 ```powershell
 cd software_supply_chain_provenance_demo
-gh run download --name python-distributions --dir dist
-python scripts/verify_artifact.py dist/hello_provenance_demo-0.1.0-py3-none-any.whl --mode github --repo OWNER/REPO
-python scripts/tamper_demo.py dist/hello_provenance_demo-0.1.0-py3-none-any.whl --mode github --repo OWNER/REPO
+gh run download 26840712563 --name python-distributions --dir dist --repo blizzard-new/software_supply_chain_provenance_demo
+python scripts/verify_artifact.py dist/hello_provenance_demo-0.1.0-py3-none-any.whl --mode github --repo blizzard-new/software_supply_chain_provenance_demo
+python scripts/tamper_demo.py dist/hello_provenance_demo-0.1.0-py3-none-any.whl --mode github --repo blizzard-new/software_supply_chain_provenance_demo
 ```
 
 現場講法：
-1. 先開 GitHub Actions，讓大家看到 test、build、attest 三段都有成功。
+1. 先開 GitHub Actions，讓大家看到 test、build、attest、verify、tamper rejected 都成功。
 2. 下載 workflow 產生的 artifact。
 3. 跑 `verify_artifact.py`，它會呼叫 `gh attestation verify`。
 4. 驗證通過代表 artifact digest 能對上 GitHub Actions 產生的 attestation。

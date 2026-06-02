@@ -4,6 +4,15 @@
 
 一句話說明：我們要展示同一個 build artifact 在有 attestation 時可以驗證來源與完整性；被篡改後驗證會失敗。
 
+## GitHub 已完成
+
+- Public repo: https://github.com/blizzard-new/software_supply_chain_provenance_demo
+- Latest successful Actions run: https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26840712563
+- Latest commit: `f62d84ffb4a96ee5f85527f53d2f0e7badccb6dc`
+- `Generate artifact attestation`: success
+- `Verify artifact attestation`: success
+- `Verify tamper is rejected`: success
+
 ## 已準備好的東西
 
 - 可 build 的 Python CLI artifact：`hello-provenance-demo`
@@ -30,14 +39,12 @@
 
 ## 最短完成順序
 
-1. 建公開 GitHub repo。
-2. Push 這個資料夾到 `main` branch。
-3. 確認 Actions workflow 成功。
-4. 下載 artifact。
-5. 跑 GitHub attestation verify。
-6. 跑 tamper demo。
-7. 截圖放進簡報。
-8. 照 `01_slide_outline.md` 做 8 到 9 張投影片。
+1. 打開已完成的 Actions run。
+2. 截圖 `Generate artifact attestation` 成功。
+3. 截圖 `Verify artifact attestation` 成功。
+4. 截圖 `Verify tamper is rejected` 成功。
+5. 把 `06_mermaid_diagrams.md` 的流程圖轉成投影片圖。
+6. 照 `01_slide_outline.md` 做 8 到 9 張投影片。
 
 ## 一週排程
 

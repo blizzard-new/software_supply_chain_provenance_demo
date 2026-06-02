@@ -3,9 +3,21 @@
 這個專案是資安與密碼學期末報告第一個題目「軟體供應鏈簽章與可驗證 Provenance」的實作底稿。它建立一個最小 Python CLI artifact，並提供兩種展示路線：
 
 1. 本機教學版：用 SHA-256 manifest 先練習「原始 artifact 驗證成功、篡改 artifact 驗證失敗」的故事線。
-2. 正式展示版：把專案推到公開 GitHub repo，讓 GitHub Actions 使用 `actions/attest@v4` 產生 signed artifact attestation，再用 `gh attestation verify` 驗證。
+2. 正式展示版：公開 GitHub repo 已完成，GitHub Actions 會使用 `actions/attest@v4` 產生 signed artifact attestation，再用 `gh attestation verify` 驗證。
 
-本機 manifest 不是正式 attestation，只是讓小組在 GitHub workflow 還沒跑完前可以先練 demo。正式報告要以 GitHub artifact attestation 的輸出為準。
+本機 manifest 不是正式 attestation，只是讓小組練 demo 的備援。正式報告要以 GitHub artifact attestation 的輸出為準。
+
+## GitHub 狀態
+
+- Public repo: https://github.com/blizzard-new/software_supply_chain_provenance_demo
+- Latest verified run: https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26840712563
+- Latest commit: `f62d84ffb4a96ee5f85527f53d2f0e7badccb6dc`
+- Artifact: `python-distributions`
+- Artifact attestation: generated successfully
+- `gh attestation verify`: passed for the original wheel
+- Tampered artifact: rejected as expected
+
+給組員看的整理版資料放在 `team_handoff/`。
 
 ## 專案結構
 
@@ -54,10 +66,14 @@ python scripts/tamper_demo.py --mode local
 
 ## 正式 GitHub attestation demo
 
-1. 建立一個公開 GitHub repo。
-2. 把這個資料夾內容 push 到 repo 的 `main` branch。
-3. 到 Actions 頁面確認 `build-and-attest` workflow 成功。
-4. 下載 `python-distributions` artifact，或用 GitHub CLI 下載：
+這部分已完成並已在 GitHub Actions 驗證成功。組員可以直接打開這個 run 看證據：
+
+https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26840712563
+
+若要在自己電腦重跑：
+
+1. 安裝 GitHub CLI 並登入：`gh auth login`
+2. 下載 `python-distributions` artifact，或用 GitHub CLI 下載：
 
 ```powershell
 gh run download --name python-distributions --dir dist
