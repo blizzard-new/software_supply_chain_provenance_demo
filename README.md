@@ -10,8 +10,8 @@
 ## GitHub 狀態
 
 - Public repo: https://github.com/blizzard-new/software_supply_chain_provenance_demo
-- Latest verified run: https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26840712563
-- Latest commit: `f62d84ffb4a96ee5f85527f53d2f0e7badccb6dc`
+- Verified evidence run: https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26841214975
+- Evidence commit: `c7ee14ad9699ec7a942ccc481d6be5aa87a622d9`
 - Artifact: `python-distributions`
 - Artifact attestation: generated successfully
 - `gh attestation verify`: passed for the original wheel
@@ -68,7 +68,7 @@ python scripts/tamper_demo.py --mode local
 
 這部分已完成並已在 GitHub Actions 驗證成功。組員可以直接打開這個 run 看證據：
 
-https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26840712563
+https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26841214975
 
 若要在自己電腦重跑：
 

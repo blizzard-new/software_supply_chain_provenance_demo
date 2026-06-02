@@ -4,18 +4,18 @@
 
 https://github.com/blizzard-new/software_supply_chain_provenance_demo
 
-## 最新成功 workflow
+## 截圖證據使用的成功 workflow
 
-https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26840712563
+https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26841214975
 
 Run 資訊：
 
 - Workflow: `build-and-attest`
 - Branch: `main`
-- Commit: `f62d84ffb4a96ee5f85527f53d2f0e7badccb6dc`
+- Commit: `c7ee14ad9699ec7a942ccc481d6be5aa87a622d9`
 - Artifact: `python-distributions`
-- Artifact ID: `7366816744`
-- Artifact zip digest: `sha256:f6a0e1ab0e48d2ad9d708e5b7763c61844619ddbc0ae85d31e81ba4d983e0a7a`
+- Artifact ID: `7367022299`
+- Artifact zip digest: `sha256:89325abc3ee0cd5bc171a265e64443cc715effc67d949fce8852c1b448d28156`
 
 ## Workflow 成功步驟
 
@@ -31,18 +31,18 @@ Run 資訊：
 ```text
 [github] verification PASSED
 [github] subject  = hello_provenance_demo-0.1.0-py3-none-any.whl
-[github] digest   = 25b9c77d2215753d2b54ee213d114484a14d91421c8997357470c3d597faed82
+[github] digest   = 7e1631c43d5ba0743c62a79df5b469df55a73f9c00a972ea1358ba55b3b4a7d5
 [github] builder  = https://github.com/blizzard-new/software_supply_chain_provenance_demo/.github/workflows/build-and-attest.yml@refs/heads/main
 [github] workflow = build-and-attest
-[github] commit   = f62d84ffb4a96ee5f85527f53d2f0e7badccb6dc
+[github] commit   = c7ee14ad9699ec7a942ccc481d6be5aa87a622d9
 [github] tlog     = https://rekor.sigstore.dev
 ```
 
 ## 可截圖的 tamper 失敗輸出
 
 ```text
-[tamper] original sha256 = 25b9c77d2215753d2b54ee213d114484a14d91421c8997357470c3d597faed82
-[tamper] tampered sha256 = 7bf7bbba5e8b2729436c7f0c5c56d62a2d102bf03826c0e4382efcb2582c481e
+[tamper] original sha256 = 7e1631c43d5ba0743c62a79df5b469df55a73f9c00a972ea1358ba55b3b4a7d5
+[tamper] tampered sha256 = 34b3d6cc07aaa300c8ed0723e29dfe107c811f16f49472393162d1df53971242
 [tamper] Step 2: verify tampered artifact. Expected: FAIL
 [github] verification FAILED
 [tamper] expected result: tampered artifact failed verification

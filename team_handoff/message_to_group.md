@@ -6,9 +6,9 @@ GitHub 和 demo 已經建好了：
 
 https://github.com/blizzard-new/software_supply_chain_provenance_demo
 
-最新版 Actions 已經成功：
+截圖證據使用的 Actions 已經成功：
 
-https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26840712563
+https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26841214975
 
 這個 run 已經完成：
 
@@ -22,6 +22,7 @@ https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/ru
 - `team_handoff/README.md`
 - `team_handoff/github_evidence.md`
 - `team_handoff/demo_screenshot_checklist.md`
+- `team_handoff/screenshots/`
 - `presentation_materials/01_slide_outline.md`
 - `presentation_materials/02_research_facts.md`
 - `presentation_materials/04_q_and_a.md`

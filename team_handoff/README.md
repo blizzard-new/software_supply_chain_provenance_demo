@@ -7,12 +7,12 @@
 ## GitHub 已完成
 
 - Public repo: https://github.com/blizzard-new/software_supply_chain_provenance_demo
-- 最新成功 Actions run: https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26840712563
-- 最新 commit: `f62d84ffb4a96ee5f85527f53d2f0e7badccb6dc`
+- 截圖證據使用的 Actions run: https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26841214975
+- 截圖證據使用的 commit: `c7ee14ad9699ec7a942ccc481d6be5aa87a622d9`
 - Artifact 名稱：`python-distributions`
 - Attestation 頁面：在 Actions log 裡可以看到 `Attestation uploaded to repository`
 
-最新版 Actions 已通過：
+截圖證據使用的 Actions 已通過：
 
 - `Run tests`
 - `Build package artifact`
@@ -26,7 +26,8 @@
 1. 做簡報的人看 `../presentation_materials/01_slide_outline.md`。
 2. 查資料的人看 `../presentation_materials/02_research_facts.md`。
 3. 做 demo 截圖的人看 `github_evidence.md` 和 `demo_screenshot_checklist.md`。
-4. 要貼到群組的文字看 `message_to_group.md`。
+4. 實作程式碼截圖放在 `screenshots/06_*` 到 `screenshots/10_*`。
+5. 要貼到群組的文字看 `message_to_group.md`。
 
 ## 最重要的簡報主線
 

@@ -7,8 +7,8 @@
 ## GitHub 已完成
 
 - Public repo: https://github.com/blizzard-new/software_supply_chain_provenance_demo
-- Latest successful Actions run: https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26840712563
-- Latest commit: `f62d84ffb4a96ee5f85527f53d2f0e7badccb6dc`
+- Evidence Actions run: https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26841214975
+- Evidence commit: `c7ee14ad9699ec7a942ccc481d6be5aa87a622d9`
 - `Generate artifact attestation`: success
 - `Verify artifact attestation`: success
 - `Verify tamper is rejected`: success
