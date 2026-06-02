@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>軟體供應鏈簽章與可驗證 Provenance - 組員交接完整指南</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 14mm 13mm 15mm;
+    }
+    :root {
+      --ink: #16202a;
+      --muted: #5f6b78;
+      --line: #d7dee7;
+      --soft: #f5f7fa;
+      --accent: #176b87;
+      --accent-2: #7a4b13;
+      --ok: #126b45;
+      --bad: #9a2d2d;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: white;
+      font-family: "Microsoft JhengHei", "Noto Sans TC", "PingFang TC", Arial, sans-serif;
+      font-size: 10.7pt;
+      line-height: 1.56;
+    }
+    h1, h2, h3, h4 {
+      margin: 0 0 8px;
+      line-height: 1.25;
+      color: #101820;
+      letter-spacing: 0;
+    }
+    h1 {
+      font-size: 28pt;
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: 17pt;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--accent);
+    }
+    h3 {
+      font-size: 13.5pt;
+      margin-top: 18px;
+    }
+    h4 {
+      font-size: 11.5pt;
+      margin-top: 12px;
+    }
+    p {
+      margin: 0 0 8px;
+    }
+    a {
+      color: #075985;
+      text-decoration: none;
+    }
+    ul, ol {
+      margin: 6px 0 10px 22px;
+      padding: 0;
+    }
+    li {
+      margin: 2px 0;
+    }
+    code {
+      font-family: Consolas, "Cascadia Mono", monospace;
+      font-size: 9.5pt;
+      background: #eef2f6;
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+    pre {
+      margin: 8px 0 10px;
+      padding: 10px 12px;
+      overflow: hidden;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f7f9fb;
+      font-family: Consolas, "Cascadia Mono", monospace;
+      font-size: 8.8pt;
+      line-height: 1.42;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 14px;
+      page-break-inside: avoid;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 6px 7px;
+      vertical-align: top;
+    }
+    th {
+      background: #eef5f7;
+      color: #102a33;
+      font-weight: 700;
+    }
+    .cover {
+      min-height: 250mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 8mm;
+    }
+    .eyebrow {
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      font-size: 14pt;
+      color: var(--muted);
+      max-width: 170mm;
+    }
+    .cover-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .info-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: var(--soft);
+    }
+    .info-card strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+    .section {
+      break-before: page;
+      padding-top: 1mm;
+    }
+    .section:first-of-type {
+      break-before: auto;
+    }
+    .note {
+      border-left: 4px solid var(--accent);
+      background: #f1f7f9;
+      padding: 9px 12px;
+      margin: 10px 0 12px;
+      border-radius: 0 6px 6px 0;
+    }
+    .warn {
+      border-left-color: var(--accent-2);
+      background: #fff8ed;
+    }
+    .ok {
+      color: var(--ok);
+      font-weight: 700;
+    }
+    .bad {
+      color: var(--bad);
+      font-weight: 700;
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 7px;
+      margin: 12px 0;
+      page-break-inside: avoid;
+    }
+    .flow div {
+      border: 1px solid #bed3dc;
+      background: #f4fafb;
+      border-radius: 7px;
+      padding: 8px;
+      min-height: 52px;
+      text-align: center;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+    .screenshot {
+      margin: 10px 0 14px;
+      page-break-inside: avoid;
+    }
+    .screenshot img {
+      width: 100%;
+      max-height: 132mm;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+    }
+    .caption {
+      color: var(--muted);
+      font-size: 9.2pt;
+      margin-top: 4px;
+    }
+    .slide-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin: 10px 0 12px;
+      page-break-inside: avoid;
+    }
+    .slide-card h3 {
+      margin-top: 0;
+      color: #0f4f66;
+    }
+    .mini {
+      font-size: 9.4pt;
+      color: var(--muted);
+    }
+    .tag {
+      display: inline-block;
+      padding: 1px 6px;
+      border: 1px solid #b9c9d1;
+      border-radius: 999px;
+      background: #f6fbfc;
+      font-size: 9pt;
+      margin-right: 4px;
+      color: #184e5f;
+    }
+    .compact td, .compact th {
+      padding: 5px 6px;
+      font-size: 9.8pt;
+    }
+    .footer-note {
+      color: var(--muted);
+      font-size: 9pt;
+      border-top: 1px solid var(--line);
+      padding-top: 8px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <section class="cover">
+    <div>
+      <div class="eyebrow">Final Report Topic 1 - Team Handoff Guide</div>
+      <h1>軟體供應鏈簽章與可驗證 Provenance</h1>
+      <p class="subtitle">這份文件是給組員製作簡報用的完整交接資料。內容包含題目背景、實作專案、GitHub attestation 證據、每個資料夾用途、Demo 重跑方法、截圖使用建議，以及逐頁簡報規劃。</p>
+      <div class="cover-grid">
+        <div class="info-card">
+          <strong>公開 GitHub Repo</strong>
+          <a href="https://github.com/blizzard-new/software_supply_chain_provenance_demo">github.com/blizzard-new/software_supply_chain_provenance_demo</a>
+        </div>
+        <div class="info-card">
+          <strong>最新 CI 狀態</strong>
+          Run <a href="https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26842529539">26842529539</a> 已完成，conclusion 為 success。
+        </div>
+        <div class="info-card">
+          <strong>主要證據 Run</strong>
+          Run <a href="https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26841214975">26841214975</a> 是本文件截圖和 terminal 證據的主要來源。
+        </div>
+        <div class="info-card">
+          <strong>交接資料夾</strong>
+          <code>team_handoff/</code> 和 <code>presentation_materials/</code> 是組員做簡報時最常用的兩個資料夾。
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="note">
+        <strong>一句話主軸：</strong>我們不是只證明程式碼存在，而是證明最後交出去的 artifact 是由指定 GitHub repo、指定 commit、指定 GitHub Actions workflow 建出來，並且任何一個 byte 被改掉都會驗證失敗。
+      </div>
+      <p class="footer-note">建議用途：組員先讀第 1 至 6 節建立共識，再直接按照第 9 節逐頁做簡報。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>1. 題目定位與報告重點</h2>
+    <p>這個題目屬於現代軟體供應鏈安全。傳統報告常停在「程式碼有沒有簽章」或「檔案 hash 是否相同」，但現在攻擊者更常針對 CI/CD、build script、release artifact、套件上傳流程下手。因此簡報要把重點放在 <strong>artifact 從哪裡來、誰建的、用哪個 workflow 建的、是否被竄改</strong>。</p>
+    <div class="note">
+      <strong>報告核心問題：</strong>如果使用者下載到一個 wheel、binary 或 container image，他要怎麼知道這個檔案真的來自我們宣稱的 source repository 和 build workflow，而不是攻擊者另外做出來的同名檔案？
+    </div>
+    <h3>1.1 這次實作回答什麼問題</h3>
+    <ul>
+      <li>如何在 GitHub Actions 裡 build Python package artifact。</li>
+      <li>如何用 <code>actions/attest@v4</code> 為 build output 產生 artifact attestation。</li>
+      <li>如何用 <code>gh attestation verify</code> 驗證 artifact digest、repo、workflow、commit 等 provenance 資訊。</li>
+      <li>如何用 tamper demo 證明「只改 1 byte」就會讓驗證失敗。</li>
+      <li>如何把這些流程整理成可以在期末簡報中展示的證據。</li>
+    </ul>
+    <h3>1.2 簡報要避免的誤解</h3>
+    <table>
+      <thead><tr><th>常見誤解</th><th>正確說法</th><th>簡報怎麼講</th></tr></thead>
+      <tbody>
+        <tr><td>有 hash 就等於安全</td><td>hash 只能證明內容是否改變，不能證明它是誰建的。</td><td>先用 hash 當鋪陳，再說 provenance 補上來源與 build context。</td></tr>
+        <tr><td>attestation 就是一般簽章</td><td>attestation 是帶 metadata 的可驗證聲明，通常會綁定 artifact digest 和 build provenance。</td><td>用「簽的是 artifact 加上來源資訊」來解釋。</td></tr>
+        <tr><td>CI 有過就代表 artifact 可信</td><td>CI pass 只代表流程跑完，還要能把下載到的 artifact 綁回那次 build。</td><td>展示 verify pass 和 tamper fail 兩張 terminal 圖。</td></tr>
+        <tr><td>本地 manifest 就是正式 attestation</td><td>本地 manifest 是 rehearsal，不是 signed attestation。正式證據來自 GitHub Actions 和 GitHub CLI 驗證。</td><td>把 local demo 說成練習版，把 GitHub demo 說成正式版。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>2. 技術背景：Artifact、Provenance、Attestation</h2>
+    <h3>2.1 名詞解釋</h3>
+    <table>
+      <thead><tr><th>名詞</th><th>意思</th><th>本專案例子</th></tr></thead>
+      <tbody>
+        <tr><td>Artifact</td><td>build 流程產出的檔案，可能是 wheel、binary、container image、installer。</td><td><code>dist/hello_provenance_demo-0.1.0-py3-none-any.whl</code></td></tr>
+        <tr><td>Digest</td><td>artifact 內容的雜湊值。內容變一個 byte，SHA-256 就會改變。</td><td>terminal 截圖中的 original sha256 和 tampered sha256。</td></tr>
+        <tr><td>Provenance</td><td>描述 artifact 生產過程的 metadata，例如 repo、commit、workflow、builder。</td><td>GitHub Actions 產生的 SLSA build provenance。</td></tr>
+        <tr><td>Attestation</td><td>對 artifact 與 provenance 的可驗證聲明。它讓驗證者確認 artifact 是否符合宣稱來源。</td><td><code>actions/attest@v4</code> 產生的 GitHub artifact attestation。</td></tr>
+        <tr><td>Verification policy</td><td>驗證者接受 artifact 的條件，例如必須來自指定 repo、指定 workflow、digest 要吻合。</td><td><code>scripts/verify_artifact.py</code> 呼叫 <code>gh attestation verify</code>。</td></tr>
+      </tbody>
+    </table>
+    <h3>2.2 為什麼這是資安題目</h3>
+    <p>軟體供應鏈攻擊不一定要破解加密演算法。攻擊者只要能在 release 流程中替換 artifact、偷改 dependency、污染 build runner、或把惡意檔案偽裝成官方檔案，就可能成功。Provenance 的價值是讓使用者和平台可以問出更精準的問題：</p>
+    <ul>
+      <li>這個 artifact 的 digest 是否等於 attestation 裡記錄的 subject digest？</li>
+      <li>這個 artifact 是否由我信任的 repository 產生？</li>
+      <li>這個 artifact 是否由預期的 GitHub Actions workflow 產生？</li>
+      <li>這個 artifact 是否對應到正確 commit，而不是攻擊者自建的分支或 fork？</li>
+      <li>如果 artifact 被改掉，驗證是否會立刻失敗？</li>
+    </ul>
+    <h3>2.3 本專案的完整流程</h3>
+    <div class="flow">
+      <div>Source Code</div>
+      <div>GitHub Actions Build</div>
+      <div>Artifact: wheel</div>
+      <div>Attestation</div>
+      <div>Verification / Tamper Fail</div>
+    </div>
+    <p>簡報時可以把這個流程講成「從 source 到 artifact 的可驗證鏈」。真正要保護的不是單一檔案，而是 <strong>source code、CI/CD、build output、驗證政策</strong> 之間的連結。</p>
+  </section>
+
+  <section class="section">
+    <h2>3. 官方資料整理，可放進簡報的背景</h2>
+    <table>
+      <thead><tr><th>來源</th><th>可引用重點</th><th>簡報用途</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>GitHub Docs - Artifact attestations</td>
+          <td>GitHub Actions 可以為 build artifact 產生建立 build provenance 的 artifact attestation。產生時 workflow 需要設定 <code>id-token: write</code>、<code>contents: read</code>、<code>attestations: write</code> 等權限。</td>
+          <td>Slide 4 或 Slide 6 說明為什麼 workflow 要這些 permissions。</td>
+        </tr>
+        <tr>
+          <td>GitHub <code>actions/attest</code></td>
+          <td><code>actions/attest@v4</code> 支援 provenance、SBOM、custom predicate。沒有提供 SBOM 或 custom predicate 時，預設會產生 SLSA build provenance attestation。</td>
+          <td>Slide 7 解釋這次 demo 用的是 build provenance 模式。</td>
+        </tr>
+        <tr>
+          <td>SLSA v1.2 Provenance</td>
+          <td>Build provenance 的目標是把 build output 回溯到產生它的 source code 和 build process。</td>
+          <td>Slide 3 定義 provenance，Slide 10 講限制與延伸。</td>
+        </tr>
+        <tr>
+          <td>PEP 740</td>
+          <td>Python packaging 生態也在推動 index-hosted digital attestations，重點是讓套件 index 能存放和驗證 provenance 相關資訊，而不是只靠舊式 PGP signature。</td>
+          <td>Slide 4 說明這不是單一平台的玩具，而是套件生態的趨勢。</td>
+        </tr>
+        <tr>
+          <td>Sigstore Docs</td>
+          <td>Sigstore 強調 identity-based signing、OIDC、短期憑證、Fulcio、Rekor transparency log。GitHub artifact attestation 背後也使用 Sigstore bundle 格式。</td>
+          <td>Slide 4 補充為什麼現代簽章偏向 keyless / identity-based。</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note warn">
+      <strong>簡報語氣建議：</strong>不要說「我們發明了一個新的簽章系統」。應該說「我們用 GitHub Actions、GitHub artifact attestations、SLSA provenance、GitHub CLI 驗證，實作一個可展示的軟體供應鏈 provenance demo」。
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>4. GitHub 與實作狀態</h2>
+    <h3>4.1 目前已完成</h3>
+    <table class="compact">
+      <thead><tr><th>項目</th><th>狀態</th><th>證據</th></tr></thead>
+      <tbody>
+        <tr><td>公開 GitHub repo</td><td class="ok">完成</td><td><a href="https://github.com/blizzard-new/software_supply_chain_provenance_demo">repo home</a>，截圖 <code>01_repo_home.png</code></td></tr>
+        <tr><td>GitHub Actions build</td><td class="ok">完成</td><td>Run <a href="https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26841214975">26841214975</a> 和 latest run <a href="https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26842529539">26842529539</a> 都是 success</td></tr>
+        <tr><td>Artifact attestation</td><td class="ok">完成</td><td><code>03_attestation_created.png</code>，workflow 使用 <code>actions/attest@v4</code></td></tr>
+        <tr><td>正式 GitHub verify</td><td class="ok">完成</td><td><code>11_verify_pass_terminal.png</code> 顯示原始 wheel 驗證通過</td></tr>
+        <tr><td>Tamper 驗證</td><td class="ok">完成</td><td><code>12_tamper_fail_terminal.png</code> 顯示竄改檔案驗證失敗</td></tr>
+        <tr><td>給組員截圖資料夾</td><td class="ok">完成</td><td><code>team_handoff/screenshots/</code> 共有 12 張截圖</td></tr>
+      </tbody>
+    </table>
+    <h3>4.2 重要連結和版本</h3>
+    <table class="compact">
+      <tbody>
+        <tr><th>Repo</th><td><a href="https://github.com/blizzard-new/software_supply_chain_provenance_demo">https://github.com/blizzard-new/software_supply_chain_provenance_demo</a></td></tr>
+        <tr><th>主要證據 run</th><td><a href="https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26841214975">26841214975</a>，commit <code>c7ee14ad9699ec7a942ccc481d6be5aa87a622d9</code></td></tr>
+        <tr><th>最新 push 後 run</th><td><a href="https://github.com/blizzard-new/software_supply_chain_provenance_demo/actions/runs/26842529539">26842529539</a>，commit <code>246db4410bf8d55fe586cec56e13a849bff39356</code></td></tr>
+        <tr><th>Artifact</th><td><code>python-distributions</code>，wheel 檔名 <code>hello_provenance_demo-0.1.0-py3-none-any.whl</code></td></tr>
+      </tbody>
+    </table>
+    <div class="screenshot">
+      <img src="screenshots/02_actions_success.png" alt="GitHub Actions success screenshot">
+      <div class="caption">可放在簡報第 5 頁：GitHub Actions 已完成 test、build、attest、verify、tamper rejected。</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>5. 每個資料夾與檔案用途</h2>
+    <h3>5.1 資料夾地圖</h3>
+    <table>
+      <thead><tr><th>資料夾</th><th>裡面有什麼</th><th>組員怎麼用</th></tr></thead>
+      <tbody>
+        <tr><td><code>.github/workflows/</code></td><td><code>build-and-attest.yml</code>。定義 GitHub Actions workflow：checkout、setup Python、test、build、upload artifact、generate attestation、verify、tamper rejected。</td><td>簡報第 6 至 7 頁可以放 workflow code 截圖，說明正式 GitHub attestation 是在 CI 裡產生。</td></tr>
+        <tr><td><code>src/hello_provenance/</code></td><td>Python package source code。這是被 build 成 wheel 的示範 CLI。</td><td>簡報只要說明這是 demo artifact 的來源，不需要逐行解釋。</td></tr>
+        <tr><td><code>scripts/</code></td><td><code>create_local_manifest.py</code>、<code>verify_artifact.py</code>、<code>tamper_demo.py</code>、<code>_common.py</code>。</td><td>負責建立 rehearsal manifest、驗證 artifact、製造 tampered artifact。簡報第 8 至 9 頁重點展示 verify 和 tamper。</td></tr>
+        <tr><td><code>tests/</code></td><td>CLI unit test。</td><td>說明 artifact 不是隨便包出來的，workflow 先跑測試再 build。</td></tr>
+        <tr><td><code>presentation_materials/</code></td><td>簡報摘要、逐頁大綱、研究資料、demo script、Q&A、Mermaid 圖、CSV。</td><td>組員做 PPT 前可以先讀這裡；如果時間不夠，直接讀本 PDF 第 9 節。</td></tr>
+        <tr><td><code>team_handoff/</code></td><td>給組員的交接資料：GitHub evidence、截圖 checklist、訊息草稿、本 PDF、HTML 原稿。</td><td>整個資料夾可以直接傳給組員。</td></tr>
+        <tr><td><code>team_handoff/screenshots/</code></td><td>12 張簡報可用截圖，含 GitHub 頁面、Actions、code、terminal。</td><td>簡報圖片來源。每張圖的用途在第 7 節列出。</td></tr>
+        <tr><td><code>dist/</code></td><td>build 後產生的 wheel 和 sdist。通常是執行 build 或下載 GitHub artifact 後才會出現。</td><td>Demo 重跑時會用到。若資料夾不存在，先執行 <code>python -m build</code> 或下載 GitHub artifact。</td></tr>
+        <tr><td><code>.demo/</code></td><td>本地 rehearsal 產物，例如 local manifest、tampered artifact。</td><td>只用於本地練習，不要把它講成正式 GitHub attestation。</td></tr>
+      </tbody>
+    </table>
+    <h3>5.2 重要檔案地圖</h3>
+    <table class="compact">
+      <thead><tr><th>檔案</th><th>用途</th><th>簡報重點</th></tr></thead>
+      <tbody>
+        <tr><td><code>README.md</code></td><td>專案總說明和 demo 指令。</td><td>組員第一次看 repo 先看這份。</td></tr>
+        <tr><td><code>pyproject.toml</code></td><td>Python package 設定，定義如何 build wheel。</td><td>證明 artifact 是標準 Python package build 產物。</td></tr>
+        <tr><td><code>.github/workflows/build-and-attest.yml</code></td><td>正式 GitHub CI/CD 和 attestation 流程。</td><td>簡報技術核心。要講 permissions、build、attest、verify。</td></tr>
+        <tr><td><code>scripts/verify_artifact.py</code></td><td>本地或 GitHub 模式驗證 artifact。GitHub 模式會呼叫 <code>gh attestation verify</code>。</td><td>解釋 verify pass 的 terminal output 從哪裡來。</td></tr>
+        <tr><td><code>scripts/tamper_demo.py</code></td><td>複製 artifact，翻轉其中 1 byte，再跑 verify。</td><td>解釋 tamper fail 的實作畫面。</td></tr>
+        <tr><td><code>demo.ps1</code></td><td>本地 rehearsal 一鍵流程。</td><td>如果組員要自己錄 demo，可先跑本地版熟悉流程。</td></tr>
+        <tr><td><code>team_handoff/github_evidence.md</code></td><td>GitHub run、commit、artifact、digest 證據摘要。</td><td>簡報附錄或報告口頭佐證。</td></tr>
+        <tr><td><code>team_handoff/demo_screenshot_checklist.md</code></td><td>截圖 checklist。</td><td>做簡報時確認圖沒有漏。</td></tr>
+        <tr><td><code>team_handoff/message_to_group.md</code></td><td>可以傳給組員的訊息草稿。</td><td>你可以直接複製給組員。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>6. Demo 要怎麼重跑</h2>
+    <h3>6.1 正式 GitHub attestation demo</h3>
+    <p>這是正式版本。它依賴 GitHub Actions 已經在公開 repo 產生 attestation，然後用 GitHub CLI 驗證下載回來的 artifact。</p>
+    <pre>gh auth login
+gh run download 26841214975 --name python-distributions --dir dist --repo blizzard-new/software_supply_chain_provenance_demo
+python scripts/verify_artifact.py dist/hello_provenance_demo-0.1.0-py3-none-any.whl --mode github --repo blizzard-new/software_supply_chain_provenance_demo
+python scripts/tamper_demo.py dist/hello_provenance_demo-0.1.0-py3-none-any.whl --mode github --repo blizzard-new/software_supply_chain_provenance_demo</pre>
+    <p>這段 demo 要講的不是「我會用 CLI」，而是「同一個 artifact 可以驗證通過；只要 artifact 內容被改，digest 對不上，GitHub attestation verify 就會失敗」。</p>
+    <h3>6.2 本地 rehearsal demo</h3>
+    <p>如果組員沒有 GitHub CLI 或沒有登入，可以先跑本地 rehearsal。注意：這不是正式 attestation，只是用 local manifest 練習 digest 驗證和 tamper fail。</p>
+    <pre>.\demo.ps1</pre>
+    <p>或手動執行：</p>
+    <pre>python -m pip install build
+python -m pip install -e .
+python -m unittest discover -s tests
+python -m build
+python scripts/create_local_manifest.py
+python scripts/verify_artifact.py --mode local
+python scripts/tamper_demo.py --mode local</pre>
+    <h3>6.3 Demo 口語講稿</h3>
+    <ol>
+      <li>「我先展示 GitHub Actions 成功跑完，包含 test、build、attestation、verify。」</li>
+      <li>「這個 wheel 是我們的 artifact，它有一個 SHA-256 digest。」</li>
+      <li>「GitHub attestation 記錄的 subject digest 要和我手上的 artifact digest 一致。」</li>
+      <li>「現在驗證原始 wheel，結果是 pass。」</li>
+      <li>「接著我把 wheel 中間某個 byte 翻轉，檔名看起來還是類似，但 SHA-256 已經完全不同。」</li>
+      <li>「再驗證一次，結果 fail，因為 GitHub 找不到符合這個 digest 的有效 attestation。」</li>
+    </ol>
+    <div class="two-col">
+      <div class="screenshot">
+        <img src="screenshots/11_verify_pass_terminal.png" alt="Verify pass terminal">
+        <div class="caption">第 8 頁建議放這張：原始 artifact 驗證通過。</div>
+      </div>
+      <div class="screenshot">
+        <img src="screenshots/12_tamper_fail_terminal.png" alt="Tamper fail terminal">
+        <div class="caption">第 9 頁建議放這張：tampered artifact 驗證失敗。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>7. 截圖資料夾怎麼用</h2>
+    <p><code>team_handoff/screenshots/</code> 已經整理好 12 張圖。組員不需要重新截圖，除非要換風格或補錄 live demo。</p>
+    <table>
+      <thead><tr><th>截圖</th><th>內容</th><th>建議放在哪一頁</th><th>講法</th></tr></thead>
+      <tbody>
+        <tr><td><code>01_repo_home.png</code></td><td>公開 repo 首頁。</td><td>Slide 1 或最後附錄。</td><td>證明專案已經 push 到公開 GitHub。</td></tr>
+        <tr><td><code>02_actions_success.png</code></td><td>GitHub Actions run success。</td><td>Slide 5。</td><td>展示完整 CI 流程都成功。</td></tr>
+        <tr><td><code>03_attestation_created.png</code></td><td>Generate artifact attestation step。</td><td>Slide 7。</td><td>指出 attestation 是 workflow 產生，不是手寫文字。</td></tr>
+        <tr><td><code>04_verify_pass.png</code></td><td>Verify artifact attestation step。</td><td>Slide 8 或備用。</td><td>GitHub Actions 裡也有 verify pass。</td></tr>
+        <tr><td><code>05_tamper_fail.png</code></td><td>Verify tamper is rejected step。</td><td>Slide 9 或備用。</td><td>GitHub Actions 裡確認 tamper 會被拒絕。</td></tr>
+        <tr><td><code>06_workflow_code.png</code></td><td>workflow 前半段程式碼。</td><td>Slide 6。</td><td>講 permissions、test、build、upload artifact。</td></tr>
+        <tr><td><code>07_verify_artifact_code.png</code></td><td><code>verify_artifact.py</code>。</td><td>Slide 8 或附錄。</td><td>講驗證腳本如何呼叫 GitHub CLI 並印出 digest、builder、workflow、commit。</td></tr>
+        <tr><td><code>08_tamper_demo_code.png</code></td><td><code>tamper_demo.py</code>。</td><td>Slide 9 或附錄。</td><td>講翻轉 1 byte 的 demo 是怎麼做出來的。</td></tr>
+        <tr><td><code>09_cli_code.png</code></td><td>CLI source code。</td><td>Slide 5 或附錄。</td><td>證明 artifact 有實際 source code，不是空檔案。</td></tr>
+        <tr><td><code>10_workflow_attestation_verify_code.png</code></td><td>workflow 後半段。</td><td>Slide 7。</td><td>講 <code>actions/attest@v4</code>、verify、tamper reject 三個關鍵步驟。</td></tr>
+        <tr><td><code>11_verify_pass_terminal.png</code></td><td>本機 terminal 顯示 verify pass。</td><td>Slide 8。</td><td>主 demo 證據。</td></tr>
+        <tr><td><code>12_tamper_fail_terminal.png</code></td><td>本機 terminal 顯示 tamper fail。</td><td>Slide 9。</td><td>主 demo 證據。</td></tr>
+      </tbody>
+    </table>
+    <div class="screenshot">
+      <img src="screenshots/10_workflow_attestation_verify_code.png" alt="Workflow attest and verify code">
+      <div class="caption">這張適合放在第 7 頁，讓聽眾看到 workflow 裡真的有 attestation、verify、tamper reject。</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>8. 簡報整體架構建議</h2>
+    <p>建議做 12 至 15 頁，報告時間如果是 12 至 15 分鐘，每頁平均 45 至 75 秒。重點是先講問題，再講技術，再講實作證據，最後講限制與延伸。</p>
+    <table>
+      <thead><tr><th>段落</th><th>頁數</th><th>目的</th><th>不要做的事</th></tr></thead>
+      <tbody>
+        <tr><td>開場與問題</td><td>1 至 2</td><td>讓聽眾知道為什麼 artifact provenance 重要。</td><td>不要一開始就丟 workflow code。</td></tr>
+        <tr><td>概念與趨勢</td><td>3 至 4</td><td>定義 artifact、provenance、attestation，連到 GitHub / SLSA / PyPI / Sigstore。</td><td>不要把所有官方文件逐字塞進投影片。</td></tr>
+        <tr><td>系統設計</td><td>5 至 7</td><td>展示本專案架構和 GitHub Actions workflow。</td><td>不要逐行念程式碼，只框出關鍵步驟。</td></tr>
+        <tr><td>Demo 證據</td><td>8 至 9</td><td>用 verify pass 和 tamper fail 證明有做出可驗證成果。</td><td>不要只放文字，這兩頁一定要有 terminal 截圖。</td></tr>
+        <tr><td>分析與限制</td><td>10 至 11</td><td>說明 attestation 解決什麼，沒有解決什麼。</td><td>不要宣稱 attestation 可以解決所有 supply chain risk。</td></tr>
+        <tr><td>結論與 Q&A</td><td>12 至 15</td><td>收斂主軸，附 repo link、分工、Q&A。</td><td>不要在結尾加入新技術名詞。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>9. 每一頁簡報應該放什麼</h2>
+
+    <div class="slide-card">
+      <h3>Slide 1 - 題目與一句話結論</h3>
+      <p><span class="tag">建議圖片</span><code>01_repo_home.png</code></p>
+      <ul>
+        <li><strong>標題：</strong>軟體供應鏈簽章與可驗證 Provenance。</li>
+        <li><strong>畫面：</strong>左側放題目和組員名單，右側放 GitHub repo 首頁截圖。</li>
+        <li><strong>文字：</strong>「我們實作一個 GitHub Actions provenance demo，證明 build artifact 可以被驗證來源，竄改後會驗證失敗。」</li>
+        <li><strong>講稿：</strong>「這次重點不是做一個大系統，而是做一個能被驗證的供應鏈安全流程。」</li>
+      </ul>
+    </div>
+
+    <div class="slide-card">
+      <h3>Slide 2 - 問題背景：為什麼只看 source code 不夠</h3>
+      <p><span class="tag">建議圖</span>用流程圖：source code -> CI/CD -> artifact -> user。</p>
+      <ul>
+        <li><strong>畫面：</strong>用 4 個方塊表示 source、workflow、artifact、下載者。</li>
+        <li><strong>文字：</strong>「攻擊點可能在 build pipeline、artifact 儲存、release 下載，不一定在 source code。」</li>
+        <li><strong>講稿：</strong>「就算 GitHub repo 看起來正常，使用者手上的檔案也可能不是那個 repo 建出來的，所以需要 provenance。」</li>
+      </ul>
+    </div>
+
+    <div class="slide-card">
+      <h3>Slide 3 - 核心概念定義</h3>
+      <p><span class="tag">建議圖</span>四格表：Artifact、Digest、Provenance、Attestation。</p>
+      <ul>
+        <li><strong>畫面：</strong>不要放太多字，每個名詞 1 句解釋。</li>
+        <li><strong>文字：</strong>Artifact 是產物，digest 是內容指紋，provenance 是產生過程，attestation 是可驗證聲明。</li>
+        <li><strong>講稿：</strong>「Provenance 的目的，是把 artifact 連回 build source 和 build process。」</li>
+      </ul>
+    </div>
+
+    <div class="slide-card">
+      <h3>Slide 4 - 現代標準和工具趨勢</h3>
+      <p><span class="tag">建議素材</span>GitHub / SLSA / PyPI / Sigstore 四個 logo 或文字卡。</p>
+      <ul>
+        <li><strong>畫面：</strong>四個卡片，各放一行重點。</li>
+        <li><strong>文字：</strong>GitHub artifact attestations、SLSA build provenance、PEP 740 digital attestations、Sigstore identity-based signing。</li>
+        <li><strong>講稿：</strong>「這個題目不是單一 GitHub 功能，而是整個開源套件生態正在往可驗證 provenance 發展。」</li>
+      </ul>
+    </div>
+
+    <div class="slide-card">
+      <h3>Slide 5 - 本專案實作架構</h3>
+      <p><span class="tag">建議圖片</span><code>02_actions_success.png</code> 或自行畫流程圖。</p>
+      <ul>
+        <li><strong>畫面：</strong>Python CLI package -> test -> build wheel -> upload artifact -> attest -> verify -> tamper fail。</li>
+        <li><strong>文字：</strong>「用 GitHub Actions 自動產生和驗證 artifact attestation。」</li>
+        <li><strong>講稿：</strong>「我們選 Python wheel 是因為檔案小、build 流程清楚，很適合展示 provenance。」</li>
+      </ul>
+    </div>
+
+    <div class="slide-card">
+      <h3>Slide 6 - GitHub Actions workflow 前半段</h3>
+      <p><span class="tag">建議圖片</span><code>06_workflow_code.png</code></p>
+      <ul>
+        <li><strong>畫面：</strong>框出 <code>permissions</code>、<code>Run tests</code>、<code>Build package artifact</code>、<code>Upload package artifact</code>。</li>
+        <li><strong>文字：</strong><code>id-token: write</code> 讓 workflow 可以取得 OIDC token；<code>attestations: write</code> 讓 workflow 可以寫入 attestation。</li>
+        <li><strong>講稿：</strong>「這些 permissions 是供應鏈安全裡很重要的最小權限設計。」</li>
+      </ul>
+    </div>
+
+    <div class="slide-card">
+      <h3>Slide 7 - Attestation 和驗證 workflow</h3>
+      <p><span class="tag">建議圖片</span><code>10_workflow_attestation_verify_code.png</code></p>
+      <ul>
+        <li><strong>畫面：</strong>框出 <code>Generate artifact attestation</code>、<code>Verify artifact attestation</code>、<code>Verify tamper is rejected</code>。</li>
+        <li><strong>文字：</strong>attest 產生 provenance，verify 驗證原始 artifact，tamper test 驗證竄改後會失敗。</li>
+        <li><strong>講稿：</strong>「這頁是實作核心，代表 CI 不是只 build，而是把 provenance 也納入驗證流程。」</li>
+      </ul>
+    </div>
+
+    <div class="slide-card">
+      <h3>Slide 8 - Demo 1：原始 artifact 驗證通過</h3>
+      <p><span class="tag">建議圖片</span><code>11_verify_pass_terminal.png</code></p>
+      <ul>
+        <li><strong>畫面：</strong>放 terminal 截圖，圈出 <code>verification PASSED</code>、subject、digest、builder、workflow、commit。</li>
+        <li><strong>文字：</strong>「原始 wheel 的 digest 和 GitHub attestation subject digest 一致。」</li>
+        <li><strong>講稿：</strong>「驗證通過不是因為檔名相同，而是 digest 對上 attestation 裡的 subject。」</li>
+      </ul>
+    </div>
+
+    <div class="slide-card">
+      <h3>Slide 9 - Demo 2：竄改 artifact 驗證失敗</h3>
+      <p><span class="tag">建議圖片</span><code>12_tamper_fail_terminal.png</code></p>
+      <ul>
+        <li><strong>畫面：</strong>放 terminal 截圖，圈出 original sha256、tampered sha256、verification FAILED。</li>
+        <li><strong>文字：</strong>「翻轉 1 byte 就會讓 SHA-256 改變，因此找不到符合的有效 attestation。」</li>
+        <li><strong>講稿：</strong>「這就是 artifact integrity 和 provenance 綁定後的效果。」</li>
+      </ul>
+    </div>
+
+    <div class="slide-card">
+      <h3>Slide 10 - 實作程式碼畫面</h3>
+      <p><span class="tag">建議圖片</span><code>07_verify_artifact_code.png</code>、<code>08_tamper_demo_code.png</code></p>
+      <ul>
+        <li><strong>畫面：</strong>左右各放一張 code screenshot，不要放太滿。</li>
+        <li><strong>文字：</strong><code>verify_artifact.py</code> 負責驗證；<code>tamper_demo.py</code> 負責製造竄改檔案並確認 fail。</li>
+        <li><strong>講稿：</strong>「我們不是只截 GitHub 圖，也有寫驗證和攻擊模擬腳本。」</li>
+      </ul>
+    </div>
+
+    <div class="slide-card">
+      <h3>Slide 11 - 安全性分析：解決了什麼</h3>
+      <p><span class="tag">建議圖</span>表格或 check list。</p>
+      <ul>
+        <li><strong>可以解決：</strong>artifact 是否被改、是否來自指定 repo、是否由指定 workflow build、是否能追到 commit。</li>
+        <li><strong>簡報文字：</strong>「Provenance 讓驗證者不只看檔案內容，也能看 build context。」</li>
+        <li><strong>講稿：</strong>「這讓 release 驗證從『相信發布者』變成『驗證 artifact 與 build 證據』。」</li>
+      </ul>
+    </div>
+
+    <div class="slide-card">
+      <h3>Slide 12 - 限制：沒有解決什麼</h3>
+      <p><span class="tag">建議圖</span>限制表格。</p>
+      <ul>
+        <li><strong>限制 1：</strong>如果 source code 本身有惡意邏輯，attestation 仍可能正常通過。</li>
+        <li><strong>限制 2：</strong>如果 workflow 被合法 commit 改壞，attestation 只證明它來自那個 workflow，不代表 workflow 本身安全。</li>
+        <li><strong>限制 3：</strong>驗證者需要明確 policy，例如接受哪個 repo、哪個 workflow、哪個 organization。</li>
+        <li><strong>講稿：</strong>「attestation 不是萬靈丹，它是供應鏈安全裡的 provenance layer。」</li>
+      </ul>
+    </div>
+
+    <div class="slide-card">
+      <h3>Slide 13 - 組員分工與資料夾使用</h3>
+      <p><span class="tag">建議圖</span>放資料夾表或 repo tree。</p>
+      <ul>
+        <li><strong>畫面：</strong>列出 <code>presentation_materials/</code>、<code>team_handoff/</code>、<code>team_handoff/screenshots/</code>。</li>
+        <li><strong>文字：</strong>「簡報文字看本 PDF，圖片用 screenshots，實作細節看 scripts 和 workflow。」</li>
+        <li><strong>講稿：</strong>「這頁給組員和老師知道資料已經整理好，不是只有口頭 demo。」</li>
+      </ul>
+    </div>
+
+    <div class="slide-card">
+      <h3>Slide 14 - 結論</h3>
+      <p><span class="tag">建議圖</span>用三句收斂。</p>
+      <ul>
+        <li><strong>結論 1：</strong>現代供應鏈安全要驗證 artifact 的來源與 build process。</li>
+        <li><strong>結論 2：</strong>GitHub artifact attestations 可以把 artifact digest 和 SLSA provenance 綁在一起。</li>
+        <li><strong>結論 3：</strong>本實作已證明原始 artifact 可驗證通過，竄改 artifact 會失敗。</li>
+        <li><strong>講稿：</strong>「我們完成的是一個從 source 到 artifact 到 verification 的端到端 demo。」</li>
+      </ul>
+    </div>
+
+    <div class="slide-card">
+      <h3>Slide 15 - Q&A 和參考資料</h3>
+      <p><span class="tag">建議內容</span>repo link、官方來源、可能問題。</p>
+      <ul>
+        <li><strong>畫面：</strong>放 repo link 和 4 至 5 個官方參考來源。</li>
+        <li><strong>可預期問題：</strong>「這跟 hash 有什麼不同？」「如果 source code 本來就有毒怎麼辦？」「為什麼要用 GitHub Actions？」</li>
+        <li><strong>講稿：</strong>「hash 是內容指紋，provenance 是來源與 build context；兩者一起才比較完整。」</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>10. 可直接放進簡報的講稿摘要</h2>
+    <h3>10.1 開場 30 秒</h3>
+    <p>「我們這組選的題目是軟體供應鏈簽章與可驗證 provenance。核心問題是：當使用者下載一個套件或 binary 時，怎麼知道它真的來自指定 source code 和指定 build workflow？我們用 GitHub Actions 實作了一個 Python artifact demo，產生 GitHub artifact attestation，並用 GitHub CLI 驗證原始 artifact 通過、竄改 artifact 失敗。」</p>
+    <h3>10.2 Demo 前 30 秒</h3>
+    <p>「接下來我們不是只看 source code，而是看 build 出來的 wheel。這個 wheel 有 SHA-256 digest，GitHub attestation 裡也有 subject digest。如果兩者一致，就能驗證它對應到那次 GitHub Actions build。若我把 wheel 改掉 1 byte，digest 會改變，驗證就會失敗。」</p>
+    <h3>10.3 結尾 30 秒</h3>
+    <p>「這個 demo 的價值在於把 release artifact 從『看起來像官方檔案』提升成『可以用 provenance 驗證來源』。它不能取代 code review、dependency scanning 或 SBOM，但可以補上 artifact 來源驗證這一層，讓供應鏈攻擊更難偽裝成正常 release。」</p>
+  </section>
+
+  <section class="section">
+    <h2>11. 老師可能問的問題與回答</h2>
+    <table>
+      <thead><tr><th>問題</th><th>建議回答</th></tr></thead>
+      <tbody>
+        <tr><td>你們的 attestation 跟單純 hash 有什麼不同？</td><td>hash 只證明檔案內容是否改變；attestation 會把 artifact digest 和來源資訊綁在一起，例如 repo、commit、workflow、builder。兩者不是替代關係，而是 attestation 會使用 digest 作為 subject。</td></tr>
+        <tr><td>如果 source code 一開始就是惡意的，attestation 會抓到嗎？</td><td>不會。attestation 證明 artifact 來自指定 source 和 build process，不保證 source code 本身無漏洞或無惡意。因此仍需要 code review、dependency scanning、測試、SBOM 等配套。</td></tr>
+        <tr><td>為什麼使用 GitHub Actions，而不是自己本機簽章？</td><td>本機簽章會牽涉長期金鑰管理，也很難證明 build context。GitHub Actions 可以用 OIDC 和 GitHub artifact attestations，把 workflow identity 和 build provenance 結合。</td></tr>
+        <tr><td>本地 manifest 算不算正式 provenance？</td><td>不算。本地 manifest 只是課堂 rehearsal，方便示範 digest 驗證和 tamper fail。正式 demo 是公開 GitHub repo 的 workflow 產生 artifact attestation，再用 GitHub CLI 驗證。</td></tr>
+        <tr><td>你們怎麼證明 tamper 真的被擋？</td><td><code>tamper_demo.py</code> 會複製 artifact 並翻轉其中 1 byte，接著重新跑 verify。terminal 截圖顯示 original sha256 和 tampered sha256 不同，tampered artifact 驗證失敗。</td></tr>
+        <tr><td>這套流程可以套到 container image 嗎？</td><td>可以，GitHub artifact attestations 和 <code>actions/attest</code> 也支援 container image，但 workflow 會改成使用 image name 和 digest。這次選 Python wheel 是為了讓期末 demo 更短、更容易驗證。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>12. 參考資料</h2>
+    <ul>
+      <li>GitHub Docs - Using artifact attestations to establish provenance for builds: <a href="https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations">https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations</a></li>
+      <li>GitHub Action - actions/attest: <a href="https://github.com/actions/attest">https://github.com/actions/attest</a></li>
+      <li>SLSA v1.2 - Provenance: <a href="https://slsa.dev/spec/v1.2/provenance">https://slsa.dev/spec/v1.2/provenance</a></li>
+      <li>PEP 740 - Index support for digital attestations: <a href="https://peps.python.org/pep-0740/">https://peps.python.org/pep-0740/</a></li>
+      <li>Sigstore Docs - Overview: <a href="https://docs.sigstore.dev/">https://docs.sigstore.dev/</a></li>
+    </ul>
+    <div class="note">
+      <strong>交接檢查清單：</strong>做 PPT 前請確認至少使用 <code>02_actions_success.png</code>、<code>10_workflow_attestation_verify_code.png</code>、<code>11_verify_pass_terminal.png</code>、<code>12_tamper_fail_terminal.png</code>。這四張圖足以支撐「有 build、有 attestation、有 verify、有 tamper fail」。
+    </div>
+  </section>
+</body>
+</html>
