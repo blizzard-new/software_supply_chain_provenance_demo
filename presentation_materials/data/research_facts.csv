@@ -1,0 +1,12 @@
+topic,fact,source
+GitHub artifact attestations,"Artifact attestations establish provenance and integrity guarantees for build artifacts, so consumers can verify where and how software was built.",https://docs.github.com/en/actions/concepts/security/artifact-attestations
+GitHub attestation contents,"Attestations include workflow, repository, organization, environment, commit SHA, triggering event, and OIDC-related information.",https://docs.github.com/en/actions/concepts/security/artifact-attestations
+SLSA level,"GitHub says artifact attestations by themselves provide SLSA v1.0 Build Level 2; reusable workflows can help meet Build Level 3.",https://docs.github.com/en/actions/concepts/security/artifact-attestations
+Workflow permissions,"Binary artifact attestation needs id-token: write, contents: read, attestations: write, and uses actions/attest@v4 with subject-path.",https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations
+Verification command,"GitHub CLI verifies binary artifact attestations with gh attestation verify PATH -R OWNER/REPO.",https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations
+Attestation limitation,"GitHub warns that artifact attestations do not guarantee an artifact is secure; consumers still need policy and risk decisions.",https://docs.github.com/en/actions/concepts/security/artifact-attestations
+GitHub plan note,"On GitHub Free, Pro, and Team plans, artifact attestations are available for public repositories; private/internal repositories require Enterprise Cloud.",https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations
+SLSA v1.2,"SLSA v1.2 was announced on 2025-11-24 and introduced the Source Track for source authoring, review, and management threats.",https://slsa.dev/blog/2025/11/announce-slsa-v1.2
+PyPI attestations,"PyPI implements PEP 740 digital attestations and accepts SLSA Provenance and PyPI Publish attestations.",https://docs.pypi.org/attestations/
+PEP 740,"PEP 740 standardizes index support for digitally signed attestations and provenance objects for Python package distributions.",https://peps.python.org/pep-0740/
+Sigstore Cosign,"Cosign bundles include signature, certificate, timestamp, and transparency log inclusion proof.",https://docs.sigstore.dev/quickstart/quickstart-cosign/
