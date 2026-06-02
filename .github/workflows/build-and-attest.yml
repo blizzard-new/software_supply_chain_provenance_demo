@@ -43,3 +43,13 @@ jobs:
         uses: actions/attest@v4
         with:
           subject-path: dist/*
+
+      - name: Verify artifact attestation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/verify_artifact.py dist/*.whl --mode github --repo "$GITHUB_REPOSITORY"
+
+      - name: Verify tamper is rejected
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/tamper_demo.py dist/*.whl --mode github --repo "$GITHUB_REPOSITORY"
